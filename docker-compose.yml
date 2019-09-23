@@ -1,0 +1,22 @@
+version: "2"
+
+
+
+services:
+  test-2.5:
+    build:
+      context: .
+      args:
+        RUBY_VERSION: 2.5
+    working_dir: /home/app
+    
+  test-2.6:
+    build:
+      context: .
+      args:
+        RUBY_VERSION: 2.6
+    working_dir: /home/app
+    
+    
+
+

@@ -7,7 +7,7 @@ Gem::Specification.new 'timeouter', Timeouter::VERSION do |spec|
   spec.homepage      = 'https://github.com/RnD-Soft/timeouter'
   spec.license       = 'MIT'
 
-  spec.files         = `git ls-files -z lib/timeouter.rb lib/timeouter README.md LICENSE features`.split("\x0").reject do |f|
+  spec.files         = %w(lib/timeouter.rb lib/timeouter/timer.rb lib/timeouter/version.rb README.md LICENSE).reject do |f|
     f.match(%r{^(test|spec|features)/})
   end
 
@@ -17,6 +17,5 @@ Gem::Specification.new 'timeouter', Timeouter::VERSION do |spec|
   spec.add_development_dependency 'rspec_junit_formatter'
   spec.add_development_dependency 'simplecov'
   spec.add_development_dependency 'simplecov-console'
-  spec.add_development_dependency 'rubocop'
 end
 

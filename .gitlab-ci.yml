@@ -3,15 +3,34 @@ stages:
   - build
   - deploy
 
-test-2.5:
+.test:
   image: rnds/ruby:2.5-test
   stage: tests
+  variables:
+    COMPOSE_PROJECT_NAME: timeouter_${CI_PIPELINE_ID}_${CI_JOB_ID}
   script:
     - bundle install --jobs=3 --path vendor/bundle && bundle package --all
-    - bundle exec rspec
+    - docker-compose build --force-rm --pull test-${CASE}
+    - docker-compose up --force-recreate -t 1 --remove-orphans -d test-${CASE}
+    - docker-compose exec -T test-${CASE} rspec
+    - docker-compose exec -T test-${CASE} cat rspec.xml > rspec-${CASE}.xml
+    - ls -al
+    - cat rspec*
+  after_script:
+    - docker-compose down -v --remove-orphans
   artifacts:
     reports:
       junit: rspec*.xml
+
+test-2.5:
+  extends: .test
+  variables:
+    CASE: 2.5
+
+test-2.6:
+  extends: .test
+  variables:
+    CASE: 2.6
 
 
 # build:
