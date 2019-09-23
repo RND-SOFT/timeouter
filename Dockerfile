@@ -12,7 +12,7 @@ RUN mkdir -p /usr/local/etc \
   && echo 'gem: --no-document' > ~/.gemrc
 
 RUN set -ex \
-  && apk add --no-cache build-base
+  && apk add --no-cache build-base git
 
 ADD Gemfile Gemfile.lock *.gemspec /home/app/
 ADD lib/timeouter/version.rb /home/app/lib/timeouter/
