@@ -8,6 +8,7 @@ services:
       context: .
       args:
         RUBY_VERSION: 2.5
+    image: timeouter-tests:2.5
     working_dir: /home/app
     
   test-2.6:
@@ -15,6 +16,7 @@ services:
       context: .
       args:
         RUBY_VERSION: 2.6
+    image: timeouter-tests:2.5
     working_dir: /home/app
     
     
