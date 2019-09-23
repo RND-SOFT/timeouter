@@ -14,7 +14,9 @@ Gem::Specification.new 'timeouter', Timeouter::VERSION do |spec|
   spec.add_development_dependency 'bundler', '~> 2.0', '>= 2.0.1'
   spec.add_development_dependency 'rake'
   spec.add_development_dependency 'rspec'
+  spec.add_development_dependency 'rspec_junit_formatter'
+  spec.add_development_dependency 'simplecov'
+  spec.add_development_dependency 'simplecov-console'
   spec.add_development_dependency 'rubocop'
-  spec.add_development_dependency 'webmock'
 end
 

@@ -7,16 +7,16 @@ module Timeouter
 
   class << self
 
-    def run(timeout = 0, eclass: Timeouter::TimeoutError, emessage: 'execution expired')
-      yield(Timeouter::Timer.new(timeout, eclass: eclass, emessage: emessage))
+    def run(timeout = 0, eclass: Timeouter::TimeoutError, message: 'execution expired')
+      yield(Timeouter::Timer.new(timeout, eclass: eclass, message: message))
     end
 
-    def loop(timeout = 0, eclass: Timeouter::TimeoutError, emessage: 'execution expired', &block)
-      Timeouter::Timer.new(timeout, eclass: eclass, emessage: emessage).loop(&block)
+    def loop(timeout = 0, eclass: Timeouter::TimeoutError, message: 'execution expired', &block)
+      Timeouter::Timer.new(timeout, eclass: eclass, message: message).loop(&block)
     end
 
-    def loop!(timeout = 0, eclass: Timeouter::TimeoutError, emessage: 'execution expired', &block)
-      Timeouter::Timer.new(timeout, eclass: eclass, emessage: emessage).loop!(&block)
+    def loop!(timeout = 0, eclass: Timeouter::TimeoutError, message: 'execution expired', &block)
+      Timeouter::Timer.new(timeout, eclass: eclass, message: message).loop!(&block)
     end
 
   end

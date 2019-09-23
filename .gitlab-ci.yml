@@ -1,0 +1,82 @@
+before_script: &before_pipeline_script
+  # Install ssh-agent if not already installed, it is required by Docker.
+  # (change apt-get to yum if you use a CentOS-based image)
+  - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+
+  # Run ssh-agent (inside the build environment)
+  - eval $(ssh-agent -s)
+
+  # Add the SSH key stored in SSH_PRIVATE_KEY variable to the agent store
+  - ssh-add <(echo "$SSH_PRIVATE_KEY")
+
+  # For Docker builds disable host key checking. Be aware that by adding that
+  # you are suspectible to man-in-the-middle attacks.
+  # WARNING: Use this only with the Docker executor, if you use it with shell
+  # you will overwrite your user's SSH config.
+  - mkdir -p ~/.ssh
+  - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+  - mkdir -p ~/.docker
+
+stages:
+  - tests
+  - build
+  - deploy
+
+test-2.5:
+  image: rnds/ruby:2.5-test
+  stage: tests
+  script:
+    - bundle install --jobs=3 --path vendor/bundle && bundle package --all
+    - gem build `ls | grep gemspec` && gem install `ls | grep -e '.gem$'` 
+    - rspec
+  artifacts:
+    reports:
+      junit: rspec*.xml
+
+
+# build:
+#   image: rnds/ruby:2.5-test
+#   stage: build
+#   variables:
+#     BUILDVERSION: ${CI_PIPELINE_ID}
+#   script:
+#     - bundle install --jobs=3 --path vendor/bundle && bundle package --all
+#     - gem build `ls | grep gemspec` && gem install `ls | grep -e '.gem$'` 
+#   cache:
+#     paths:
+#       - vendor/bundle
+#       - vendor/cache
+#   artifacts:
+#     name: "gem"
+#     paths:
+#       - ./*.gem
+
+# pushgem:
+#   image: rnds/ruby:2.5-test
+#   stage: deploy
+#   script:
+#     - mkdir -p ~/.gem
+#     - 'echo ":rubygems_api_key: ${RUBYGEMS_KEY}" > ~/.gem/credentials'
+#     - chmod 600 ~/.gem/credentials
+#     - export GEMFILE=`ls *.gem | tail -n 1`
+#     - gem push $GEMFILE
+#   only:
+#     - master
+
+# deps:
+#   image: rnds/ruby:2.5-test
+#   stage: deploy
+#   cache: {}
+#   allow_failure: true
+#   script:
+#     - bundle audit update
+#     - bundle audit || true
+#     - bundle outdated --only-explicit --no-pre --group default || true
+#     - vulnerable=$(bundle audit | grep "Name:" | sort | uniq | wc -l) || true
+#     - outdated=$(bundle outdated --only-explicit --no-pre --group default | grep "*" | wc -l) || true
+#     - curl "https://badgen.net/badge/vulnerable%20gems/${vulnerable}/red" > vulnerable.svg
+#     - curl "https://badgen.net/badge/outdated%20gems/${outdated}/orange" > outdated.svg
+#     - curl -L -X PUT --header "PRIVATE-TOKEN:$BOT_TOKEN" --form "title=Vulnerable gems badge" --form "file_name=vulnerable.svg" --form "code=<vulnerable.svg" --form "description=Vulnerable dependency gems" https://br.rnds.pro/api/v4/projects/$CI_PROJECT_ID/snippets/42
+#     - curl -L -X PUT --header "PRIVATE-TOKEN:$BOT_TOKEN" --form "title=Outdaged gems badge" --form "file_name=outdated.svg" --form "code=<outdated.svg" --form "description=Outdated direct dependency gems" https://br.rnds.pro/api/v4/projects/$CI_PROJECT_ID/snippets/43
+#   only: 
+#     - master

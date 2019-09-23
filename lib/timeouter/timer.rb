@@ -3,18 +3,17 @@ require 'timeout'
 module Timeouter
   class Timer
 
-    attr_reader :started_at, :exhausted_at
+    attr_reader :timeout, :started_at#, :exhausted_at
 
-    def initialize(timeout = 0, eclass: Timeouter::TimeoutError, emessage: 'execution expired')
+    def initialize(timeout = 0, eclass: nil, message: nil)
       # ensure only positive timeouts
       timeout ||= 0
-      timeout = [timeout, 0].max
+      @timeout = [timeout, 0].max
 
-      @eclass = eclass
-      @emessage = emessage
+      @eclass = eclass || Timeouter::TimeoutError
+      @message = message || 'execution expired'
 
       @started_at = Time.now
-      @exhausted_at = timeout > 0 ? @started_at + timeout : nil
     end
 
     # elapsed time from creation
@@ -24,12 +23,12 @@ module Timeouter
 
     # time left to be exhausted or nil if timeout was 0
     def left
-      @exhausted_at && [@exhausted_at - Time.now, 0].max
+      (@timeout > 0) ? [@timeout - elapsed, 0].max : nil
     end
 
     # is timeout exhausted? or nil when timeout was 0
     def exhausted?
-      @exhausted_at && (@exhausted_at < Time.now)
+      (@timeout > 0) ? elapsed > @timeout : nil
     end
 
     # is timeout NOT exhausted? or true when timeout was 0
@@ -38,7 +37,7 @@ module Timeouter
     end
 
     # ensure timeout NOT exhausted raise exception otherwise
-    def running!(eclass = @eclass, message: @emessage)
+    def running!(eclass = @eclass, message: @message)
       !exhausted? || (raise eclass.new(message))
     end
 
@@ -47,7 +46,7 @@ module Timeouter
       yield(self) while self.running?
     end
 
-    def loop!(eclass = @eclass, message: @emessage)
+    def loop!(eclass = @eclass, message: @message)
       yield(self) while self.running!(eclass, message: message)
     end
 
