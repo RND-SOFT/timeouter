@@ -53,17 +53,17 @@ build:
   only:
     - master
 
-# pushgem:
-#   image: rnds/ruby:2.5-test
-#   stage: deploy
-#   script:
-#     - mkdir -p ~/.gem
-#     - 'echo ":rubygems_api_key: ${RUBYGEMS_KEY}" > ~/.gem/credentials'
-#     - chmod 600 ~/.gem/credentials
-#     - export GEMFILE=`ls *.gem | tail -n 1`
-#     - gem push $GEMFILE
-#   only:
-#     - master
+pushgem:
+  image: rnds/ruby:2.5-test
+  stage: deploy
+  script:
+    - mkdir -p ~/.gem
+    - 'echo ":rubygems_api_key: ${RUBYGEMS_KEY}" > ~/.gem/credentials'
+    - chmod 600 ~/.gem/credentials
+    - export GEMFILE=`ls *.gem | tail -n 1`
+    - gem push $GEMFILE
+  only:
+    - master
 
 badges:
   image: rnds/ruby:2.5-test

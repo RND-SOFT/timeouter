@@ -38,9 +38,9 @@ end
 You can pass exception class and message on creation or on checking:
 
 ```ruby
-Timeouter::run(1, eclass: RuntimeError, emessage: 'error') do |t|
+Timeouter::run(1, eclass: RuntimeError, message: 'error') do |t|
   sleep 2
-  puts t.running!(eclass: MyError, emessage: 'myerror')
+  puts t.running!(eclass: MyError, message: 'myerror')
 end
 ```
 
