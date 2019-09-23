@@ -12,6 +12,7 @@ stages:
     - docker-compose build --force-rm --pull test-${CASE}
     - docker-compose up --force-recreate -t 1 --remove-orphans -d test-${CASE}
     - docker-compose exec -T test-${CASE} rspec | tee .coverage
+    - docker-compose exec -T test-${CASE} ./reporter after-build -t simplecov -r ${CODECLIMATE_TOKEN}
     - docker-compose exec -T test-${CASE} cat rspec.xml > rspec-${CASE}.xml
   after_script:
     - docker-compose down -v --remove-orphans

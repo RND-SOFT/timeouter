@@ -18,6 +18,8 @@ ADD Gemfile Gemfile.lock *.gemspec /home/app/
 ADD lib/timeouter/version.rb /home/app/lib/timeouter/
 
 RUN set -ex \
+  && wget https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 \
+  && mv test-reporter-latest-linux-amd64 reporter && chmod 777 reporter \
   && gem install bundler && gem update bundler \
   && bundle install --jobs=3 \
   && gem cleanup  \
