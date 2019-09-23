@@ -11,10 +11,11 @@ stages:
   script:
     - docker-compose build --force-rm --pull test-${CASE}
     - docker-compose up --force-recreate -t 1 --remove-orphans -d test-${CASE}
-    - docker-compose exec -T test-${CASE} rspec
+    - docker-compose exec -T test-${CASE} rspec | tee .rspec_output
     - docker-compose exec -T test-${CASE} cat rspec.xml > rspec-${CASE}.xml
   after_script:
     - docker-compose down -v --remove-orphans
+  #coverage: '/\(\d+.\d+\%\) covered'
   artifacts:
     reports:
       junit: rspec*.xml
@@ -49,17 +50,17 @@ build:
   only:
     - master
 
-pushgem:
-  image: rnds/ruby:2.5-test
-  stage: deploy
-  script:
-    - mkdir -p ~/.gem
-    - 'echo ":rubygems_api_key: ${RUBYGEMS_KEY}" > ~/.gem/credentials'
-    - chmod 600 ~/.gem/credentials
-    - export GEMFILE=`ls *.gem | tail -n 1`
-    - gem push $GEMFILE
-  only:
-    - master
+# pushgem:
+#   image: rnds/ruby:2.5-test
+#   stage: deploy
+#   script:
+#     - mkdir -p ~/.gem
+#     - 'echo ":rubygems_api_key: ${RUBYGEMS_KEY}" > ~/.gem/credentials'
+#     - chmod 600 ~/.gem/credentials
+#     - export GEMFILE=`ls *.gem | tail -n 1`
+#     - gem push $GEMFILE
+#   only:
+#     - master
 
 badges:
   image: rnds/ruby:2.5-test
