@@ -61,20 +61,22 @@ pushgem:
   only:
     - master
 
-# deps:
-#   image: rnds/ruby:2.5-test
-#   stage: deploy
-#   cache: {}
-#   allow_failure: true
-#   script:
-#     - bundle audit update
-#     - bundle audit || true
-#     - bundle outdated --only-explicit --no-pre --group default || true
-#     - vulnerable=$(bundle audit | grep "Name:" | sort | uniq | wc -l) || true
-#     - outdated=$(bundle outdated --only-explicit --no-pre --group default | grep "*" | wc -l) || true
-#     - curl "https://badgen.net/badge/vulnerable%20gems/${vulnerable}/red" > vulnerable.svg
-#     - curl "https://badgen.net/badge/outdated%20gems/${outdated}/orange" > outdated.svg
-#     - curl -L -X PUT --header "PRIVATE-TOKEN:$BOT_TOKEN" --form "title=Vulnerable gems badge" --form "file_name=vulnerable.svg" --form "code=<vulnerable.svg" --form "description=Vulnerable dependency gems" https://br.rnds.pro/api/v4/projects/$CI_PROJECT_ID/snippets/42
-#     - curl -L -X PUT --header "PRIVATE-TOKEN:$BOT_TOKEN" --form "title=Outdaged gems badge" --form "file_name=outdated.svg" --form "code=<outdated.svg" --form "description=Outdated direct dependency gems" https://br.rnds.pro/api/v4/projects/$CI_PROJECT_ID/snippets/43
-#   only: 
-#     - master
+badges:
+  image: rnds/ruby:2.5-test
+  stage: deploy
+  allow_failure: true
+  variables:
+    BRANCH_LOCK: ci/${CI_PROJECT_NAME}/${CI_COMMIT_REF_SLUG}
+    ENV_LOCK: ci/${CI_PROJECT_NAME}/${CI_ENVIRONMENT_SLUG}
+    BADGES: https://lysander.x.rnds.pro/api/v1/badges/timeouter
+  script:
+    - bundle audit update
+    - bundle audit || true
+    - bundle outdated --only-explicit --no-pre --group default || true
+    - vulnerable=$(bundle audit | grep "Name:" | sort | uniq | wc -l) || true
+    - outdated=$(bundle outdated --only-explicit --no-pre --group default | grep "*" | wc -l) || true
+    - curl -X PUT --oauth2-bearer ${BADGE_TOKEN} "${BADGES}_vulnerable.json?badge[message]=$(bundle audit | grep "Name:" | sort | uniq | wc -l)%20gems" || true
+    - curl -X PUT --oauth2-bearer ${BADGE_TOKEN} "${BADGES}_outdated.json?badge[message]=$(bundle outdated --only-explicit --no-pre --group default | grep "*" | wc -l)%20gems" || true
+    - curl -X PUT --oauth2-bearer ${BADGE_TOKEN} "${BADGES}_quality.json?badge[message]=$(rubycritic -f lint lib | tail -n 1 | cut -d ' ' -f2)%25" || true
+  only: 
+    - master
