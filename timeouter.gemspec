@@ -3,7 +3,7 @@ require './lib/timeouter/version'
 Gem::Specification.new 'timeouter', Timeouter::VERSION do |spec|
   spec.authors       = ['Samoilenko Yuri']
   spec.email         = ['kinnalru@gmail.com']
-  spec.description   = spec.summary = 'Timeouter is advisory timeout helper'
+  spec.description   = spec.summary = 'Timeouter is advisory timeout helper without any background threads.'
   spec.homepage      = 'https://github.com/RnD-Soft/timeouter'
   spec.license       = 'MIT'
 

@@ -1,4 +1,4 @@
-require_relative 'timeouter/timer'
+require 'timeouter/timer'
 
 
 module Timeouter
