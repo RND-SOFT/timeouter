@@ -2,6 +2,7 @@
 
 [![Gem Version](https://badge.fury.io/rb/timeouter.svg)](https://rubygems.org/gems/timeouter)
 [![Gem](https://img.shields.io/gem/dt/timeouter.svg)](https://rubygems.org/gems/timeouter/versions)
+[![Coverage](https://lysander.x.rnds.pro/api/v1/badges/timeouter_coverage.svg)](https://lysander.x.rnds.pro/api/v1/badges/timeouter_coverage.html)
 [![Quality](https://lysander.x.rnds.pro/api/v1/badges/timeouter_quality.svg)](https://lysander.x.rnds.pro/api/v1/badges/timeouter_quality.html)
 [![Outdated](https://lysander.x.rnds.pro/api/v1/badges/timeouter_outdated.svg)](https://lysander.x.rnds.pro/api/v1/badges/timeouter_outdated.html)
 [![Vulnerabilities](https://lysander.x.rnds.pro/api/v1/badges/timeouter_vulnerable.svg)](https://lysander.x.rnds.pro/api/v1/badges/timeouter_vulnerable.html)

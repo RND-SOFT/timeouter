@@ -82,5 +82,6 @@ badges:
     - curl -X PUT --oauth2-bearer ${BADGE_TOKEN} "${BADGES}_vulnerable.json?badge[message]=$(bundle audit | grep "Name:" | sort | uniq | wc -l)%20gems" || true
     - curl -X PUT --oauth2-bearer ${BADGE_TOKEN} "${BADGES}_outdated.json?badge[message]=$(bundle outdated --only-explicit --no-pre --group default | grep "*" | wc -l)%20gems" || true
     - curl -X PUT --oauth2-bearer ${BADGE_TOKEN} "${BADGES}_quality.json?badge[message]=$(rubycritic -f lint lib | tail -n 1 | cut -d ' ' -f2)%25" || true
+    - curl -X PUT --oauth2-bearer ${BADGE_TOKEN} "${BADGES}_coverage.json?badge[message]=$(cat .coverage | ruby -e 'puts /\((\d+.\d+)\%\) covered/.match(STDIN.read)[1]')%25" || true
   only: 
     - master
