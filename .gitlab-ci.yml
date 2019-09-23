@@ -15,7 +15,7 @@ stages:
     - docker-compose exec -T test-${CASE} cat rspec.xml > rspec-${CASE}.xml
   after_script:
     - docker-compose down -v --remove-orphans
-  coverage: '/\(\d+.\d+\%\) covered'
+  coverage: '/\(\d+.\d+\%\) covered/'
   artifacts:
     reports:
       junit: rspec*.xml
