@@ -7,7 +7,7 @@ Gem::Specification.new 'timeouter', Timeouter::VERSION do |spec|
   spec.homepage      = 'https://github.com/RnD-Soft/timeouter'
   spec.license       = 'MIT'
 
-  spec.files         = %w(lib/timeouter.rb lib/timeouter/timer.rb lib/timeouter/version.rb README.md LICENSE).reject do |f|
+  spec.files         = %w(lib/timeouter.rb lib/timeouter/timer.rb lib/timeouter/version.rb README.md).reject do |f|
     f.match(%r{^(test|spec|features)/})
   end
 
