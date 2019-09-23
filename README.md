@@ -1,5 +1,8 @@
 # Timeouter
 
+[![Gem Version](https://badge.fury.io/rb/timeouter.svg)](https://rubygems.org/gems/timeouter)
+[![Gem](https://img.shields.io/gem/dt/timeouter.svg)](https://rubygems.org/gems/timeouter/versions)
+
 Timeouter is advisory timeout helper without any background threads.
 
 # Usage

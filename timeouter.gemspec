@@ -1,6 +1,7 @@
 require './lib/timeouter/version'
 
-Gem::Specification.new 'timeouter', Timeouter::VERSION do |spec|
+Gem::Specification.new 'timeouter' do |spec|
+  spec.version       = ENV['BUILDVERSION'].to_i > 0 ? "#{Timeouter::VERSION}.#{ENV['BUILDVERSION'].to_i}" : Timeouter::VERSION
   spec.authors       = ['Samoilenko Yuri']
   spec.email         = ['kinnalru@gmail.com']
   spec.description   = spec.summary = 'Timeouter is advisory timeout helper without any background threads.'
