@@ -25,12 +25,12 @@ stages:
 test-2.5:
   extends: .test
   variables:
-    CASE: 2.5
+    CASE: '2.5'
 
 test-2.6:
   extends: .test
   variables:
-    CASE: 2.6
+    CASE: '2.6'
 
 
 # build:
