@@ -1,4 +1,7 @@
-require './lib/timeouter/version'
+$:.push File.expand_path('lib', __dir__)
+
+# Maintain your gem's version:
+require 'timeouter/version'
 
 Gem::Specification.new 'timeouter' do |spec|
   spec.version       = ENV['BUILDVERSION'].to_i > 0 ? "#{Timeouter::VERSION}.#{ENV['BUILDVERSION'].to_i}" : Timeouter::VERSION
