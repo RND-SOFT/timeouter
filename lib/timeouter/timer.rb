@@ -13,12 +13,12 @@ module Timeouter
       @eclass = eclass || Timeouter::TimeoutError
       @message = message || 'execution expired'
 
-      @started_at = Time.now
+      @started_at = Process.clock_gettime(Process::CLOCK_MONOTONIC)
     end
 
     # elapsed time from creation
     def elapsed
-      Time.now - @started_at
+      Process.clock_gettime(Process::CLOCK_MONOTONIC) - @started_at
     end
 
     # time left to be exhausted or nil if timeout was 0

@@ -4,11 +4,10 @@
 [![Gem](https://img.shields.io/gem/dt/timeouter.svg)](https://rubygems.org/gems/timeouter/versions)
 [![YARD](https://badgen.net/badge/YARD/doc/blue)](http://www.rubydoc.info/gems/timeouter)
 
-[![Test Coverage](https://api.codeclimate.com/v1/badges/4b54466f8f384e3280d8/test_coverage)](https://codeclimate.com/github/RnD-Soft/timeouter/test_coverage)
-[![Maintainability](https://api.codeclimate.com/v1/badges/4b54466f8f384e3280d8/maintainability)](https://codeclimate.com/github/RnD-Soft/timeouter/maintainability)
-[![Quality](https://lysander.x.rnds.pro/api/v1/badges/timeouter_quality.svg)](https://lysander.x.rnds.pro/api/v1/badges/timeouter_quality.html)
-[![Outdated](https://lysander.x.rnds.pro/api/v1/badges/timeouter_outdated.svg)](https://lysander.x.rnds.pro/api/v1/badges/timeouter_outdated.html)
-[![Vulnerabilities](https://lysander.x.rnds.pro/api/v1/badges/timeouter_vulnerable.svg)](https://lysander.x.rnds.pro/api/v1/badges/timeouter_vulnerable.html)
+[![Coverage](https://lysander.rnds.pro/api/v1/badges/timeouter_coverage.svg)](https://lysander.rnds.pro/api/v1/badges/timeouter_coverage.html)
+[![Quality](https://lysander.rnds.pro/api/v1/badges/timeouter_quality.svg)](https://lysander.rnds.pro/api/v1/badges/timeouter_quality.html)
+[![Outdated](https://lysander.rnds.pro/api/v1/badges/timeouter_outdated.svg)](https://lysander.rnds.pro/api/v1/badges/timeouter_outdated.html)
+[![Vulnerabilities](https://lysander.rnds.pro/api/v1/badges/timeouter_vulnerable.svg)](https://lysander.rnds.pro/api/v1/badges/timeouter_vulnerable.html)
 
 
 Timeouter is advisory timeout helper without any background threads.
@@ -24,7 +23,7 @@ Timeouter::run(3) do |t|
   sleep 1 # do some work
 
   puts t.elapsed    # 1.00011811
-  puts t.left       # 3.99985717 or nil if timeout was 0
+  puts t.left       # 1.99985717 or nil if timeout was 0
   puts t.exhausted? # false or nil if timeout was 0
   puts t.running?   # true
   puts t.running!   # true
