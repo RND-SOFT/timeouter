@@ -12,6 +12,8 @@
 
 Timeouter is advisory timeout helper without any background threads.
 
+[Article(russian) about gem.](https://blog.rnds.pro/014-timeouter?utm_source=github&utm_medium=repo&utm_campaign=rnds)
+
 # Usage
 
 Typical usage scenario:
